@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #eee;
+}
+.editor{
+    width: 500px;
+}
+[contenteditable] {
+    outline: 0px solid transparent;
+}
+.editor-heading{
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.toolbar{
+    height: 50px;   
+    background: white;   
+    border-bottom: 2px solid rgb(238, 238, 238);     
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap; 
+     
+}
+.toolbar-icon{
+    padding:1rem;  
+}
+
+.toolbar .active{
+    background-color: #dfdff9;
+}
+
+.content-editable{
+    background: white;
+    min-height: 200px;
+}
