@@ -1,43 +1,71 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #eee;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #eee;
 }
-.editor{
-    width: 500px;
+.editor {
+  width: 50vw;
+  margin: 0 auto;
 }
 [contenteditable] {
-    outline: 0px solid transparent;
+  outline: 0px solid transparent;
+  resize: both;
+  padding: 10px;
 }
-.editor-heading{
-    margin-bottom: 1rem;
-    text-align: center;
+.editor-heading {
+  margin-bottom: 1rem;
+  text-align: center;
 }
-.toolbar{
-    height: 50px;   
-    background: white;   
-    border-bottom: 2px solid rgb(238, 238, 238);     
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap; 
-     
+.toolbar {
+  height: 50px;
+  background: white;
+  border-bottom: 2px solid rgb(238, 238, 238);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
 }
-.toolbar-icon{
-    padding:1rem;  
-}
-
-.toolbar .active{
-    background-color: #dfdff9;
+.toolbar-icon {
+  padding: 1rem;
 }
 
-.content-editable{
-    background: white;
-    min-height: 200px;
+.toolbar .active {
+  background-color: #dfdff9;
+}
+
+.content-editor {
+  background: white;
+  min-height: 200px;
+}
+
+[contenteditable][placeholder]:empty:before {
+  content: attr(placeholder);
+  position: absolute;
+  color: gray;
+  background-color: transparent;
+}
+
+.suggessions {
+  position: absolute;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  transform: translate(-50%, 15%);
+}
+.suggession {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border-bottom: 1px solid black;
+  background: #eee;
 }
