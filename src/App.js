@@ -3,7 +3,7 @@ import SlateClone from "./components/SlateClone";
 function App() {
   return (
     <div className="App">
-      <SlateClone/>
+      <SlateClone html="bold"/>
     </div>
   );
 }

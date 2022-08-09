@@ -12,6 +12,8 @@ function SlateClone({ html }) {
 
     const [preview, setPreview] = useState(html)
 
+    const [innerHtml, setInnerHtml] = useState(html)
+
     const [activeCmd, setActiveCmd] = useState(null)
 
     const [suggessionStyle, setSuggessionStyle] = useState({
@@ -24,6 +26,8 @@ function SlateClone({ html }) {
 
     const suggessionTriggers = ['@', '#']
 
+    const editor = document.getElementById('content-editor')
+
     const handleInput = (e) => {
         setPreview(e.target.innerHTML)
         let { x, y } = getCaretCoordinates()
@@ -34,6 +38,8 @@ function SlateClone({ html }) {
         if (!lastCharacterBeforeCursor.trim()) {
             setShowSuggession(false)
         }
+        if(editor)
+            updateEditor()
 
         if (x == 0 && y == 0) {
             setSuggessionStyle({
@@ -108,6 +114,88 @@ function SlateClone({ html }) {
         return precedingChar;
     }
 
+    function getTextSegments(element) {
+        console.log(element);
+        const textSegments = [];
+        Array.from(element.childNodes).forEach((node) => {
+            switch(node.nodeType) {
+                case Node.TEXT_NODE:
+                    textSegments.push({text: node.nodeValue, node});
+                    break;
+                    
+                case Node.ELEMENT_NODE:
+                    textSegments.splice(textSegments.length, 0, ...(getTextSegments(node)));
+                    break;
+                    
+                default:
+                    throw new Error(`Unexpected node type: ${node.nodeType}`);
+            }
+        });
+        return textSegments;
+    }
+    
+
+    
+    function updateEditor() {
+        const sel = window.getSelection();
+        const textSegments = getTextSegments(editor);
+        const textContent = textSegments.map(({text}) => text).join('');
+        let anchorIndex = null;
+        let focusIndex = null;
+        let currentIndex = 0;
+        textSegments.forEach(({text, node}) => {
+            if (node === sel.anchorNode) {
+                anchorIndex = currentIndex + sel.anchorOffset;
+            }
+            if (node === sel.focusNode) {
+                focusIndex = currentIndex + sel.focusOffset;
+            }
+            currentIndex += text.length;
+        });
+        
+        editor.innerHTML = renderText(textContent);
+        
+        restoreSelection(anchorIndex, focusIndex);
+    }
+    
+    function restoreSelection(absoluteAnchorIndex, absoluteFocusIndex) {
+        const sel = window.getSelection();
+        const textSegments = getTextSegments(editor);
+        let anchorNode = editor;
+        let anchorIndex = 0;
+        let focusNode = editor;
+        let focusIndex = 0;
+        let currentIndex = 0;
+        textSegments.forEach(({text, node}) => {
+            const startIndexOfNode = currentIndex;
+            const endIndexOfNode = startIndexOfNode + text.length;
+            if (startIndexOfNode <= absoluteAnchorIndex && absoluteAnchorIndex <= endIndexOfNode) {
+                anchorNode = node;
+                anchorIndex = absoluteAnchorIndex - startIndexOfNode;
+            }
+            if (startIndexOfNode <= absoluteFocusIndex && absoluteFocusIndex <= endIndexOfNode) {
+                focusNode = node;
+                focusIndex = absoluteFocusIndex - startIndexOfNode;
+            }
+            currentIndex += text.length;
+        });
+        
+        sel.setBaseAndExtent(anchorNode,anchorIndex,focusNode,focusIndex);
+    }
+    
+    function renderText(text) {
+        const words = text.split(/(\s+)/);
+        const output = words.map((word) => {
+            if (word === 'red') {
+                return `<span style='color:red'>${word}</span>`;
+            }
+            else {
+                return word;
+            }
+        })
+        return output.join('');
+    }
+
 
     return (
         <>
@@ -141,7 +229,7 @@ function SlateClone({ html }) {
                     contentEditable="true"
                     id="content-editor"
                     ref={inputRef}
-                    dangerouslySetInnerHTML={{ __html: html }}
+                    dangerouslySetInnerHTML={{ __html: innerHtml }}
                     onInput={handleInput}
                     placeholder="Type @,# for mentions">
                 </div>
