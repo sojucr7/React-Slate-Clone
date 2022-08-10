@@ -70,3 +70,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 # https://stackoverflow.com/questions/15157435/get-last-character-before-caret-position-in-javascript
 # https://codepen.io/brianmearns/pen/YVjZWw?editors=1010
+# https://codesandbox.io/s/caret-coordinates-index-contenteditable-9tq3o?from-embed=&file=/src/index.js
+# https://www.npmjs.com/package/rangy
