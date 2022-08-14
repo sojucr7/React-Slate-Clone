@@ -72,3 +72,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 # https://codepen.io/brianmearns/pen/YVjZWw?editors=1010
 # https://codesandbox.io/s/caret-coordinates-index-contenteditable-9tq3o?from-embed=&file=/src/index.js
 # https://www.npmjs.com/package/rangy
+# https://stackoverflow.com/questions/50505203/how-to-replace-a-custom-text-before-caret-in-a-contenteditable-div-that-contains
+# https://stackoverflow.com/questions/3997659/replace-selected-text-in-contenteditable-div
