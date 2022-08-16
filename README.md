@@ -74,3 +74,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 # https://www.npmjs.com/package/rangy
 # https://stackoverflow.com/questions/50505203/how-to-replace-a-custom-text-before-caret-in-a-contenteditable-div-that-contains
 # https://stackoverflow.com/questions/3997659/replace-selected-text-in-contenteditable-div
+# https://stackoverflow.com/questions/27656887/replace-specific-word-in-contenteditable?rq=1

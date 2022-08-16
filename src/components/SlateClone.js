@@ -7,8 +7,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { FaBold, FaItalic, FaHeading, FaLink, FaUnderline } from "react-icons/fa"
 
 function SlateClone({ html }) {
-    const inputRef = useRef(null)
-
+    const editorRef = useRef(null)
 
 
     const [preview, setPreview] = useState(html)
@@ -32,13 +31,15 @@ function SlateClone({ html }) {
     const editor = document.getElementById('content-editor')
 
     useEffect(() => {
-        inputRef.current.focus()
+        editorRef.current.focus()
+
+        editorRef.current.innerHTML=editorRef.current.innerHTML.replace(/([\s+])@([^\s]+)/g, "<span class='tagged-user'> $2</span>&nbsp;");
 
         document.execCommand('selectAll', false, null)
         
         document.getSelection().collapseToEnd()
 
-    }, [inputRef])
+    }, [editorRef])
 
     const handleInput = (e) => {
         setPreview(e.target.innerHTML)
@@ -231,7 +232,7 @@ function SlateClone({ html }) {
                 <div className="content-editor"
                     contentEditable="true"
                     id="content-editor"
-                    ref={inputRef}
+                    ref={editorRef}
                     dangerouslySetInnerHTML={{ __html: innerHtml }}
                     onInput={handleInput}
                     placeholder="Type @,# for mentions">
